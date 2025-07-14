@@ -1,0 +1,53 @@
+{% load django_bootstrap5 %}    {# django_bootstrap5のテンプレートタグ読み込み #}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% bootstrap_css %} {# BootstrapのCSSの読み込み #}
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg nav-bg">
+        <div class="container-fluid">
+            <a class="navbar-brand text-decoration-underline" href="{% url 'library:index' %}">LibraryAPP</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    {% comment %} <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'library:index' %}">Home</a>
+                    </li> {% endcomment %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"></a>
+                    </li>
+
+                    <!-- 💡 プルダウンメニュー -->
+                    <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">History</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Rental</a></li>
+                        <li><a class="dropdown-item" href="#">Return</a></li>
+                    </ul>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Login</a>
+                    </li>
+                </ul>
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-dark" type="submit">Search</button>
+                </form>
+                <a  href="{% url 'library:create' %}" class="btn btn-outline-dark ms-2">Add Book</a>
+            </div>
+        </div>
+    </nav>
+    {% block content %}
+    {% comment %} 各ページのコンテンツが挿入される {% endcomment %}
+    {% endblock %}
+    {% bootstrap_javascript %}  {# bootstrapのJavaScriptの読み込み #}
+</body>

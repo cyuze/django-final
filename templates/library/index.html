@@ -1,40 +1,8 @@
-{% load django_bootstrap5 %}    {# django_bootstrap5のテンプレートタグ読み込み #}
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    {% bootstrap_css %} {# BootstrapのCSSの読み込み #}
-</head>
-<body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">LibraryAPP</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Login</a>
-                    </li>
-                </ul>
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
-            </div>
-        </div>
-    </nav>
-
-     <div class="container">
-    <h2 class="mb-4">📘 書籍一覧</h2>
-    <table class="table table-bordered table-striped table-hover">
-      <thead class="table-primary">
+{% extends "base.html" %}
+{% block content %}
+ <div class="container">
+    <table class="table table-striped table-hover">
+      <thead class="table-success" >
         <tr>
           <th>書籍名</th>
           <th>ジャンル</th>
@@ -42,35 +10,37 @@
           <th>出版社</th>
           <th>あらすじ</th>
           <th>ISBN番号</th>
-          <th>貸し出し状況</th>
+          <th>貸出状況</th>
+          <th></th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>星の王子さま</td>
-          <td>ファンタジー</td>
-          <td>サン＝テグジュペリ</td>
-          <td>岩波書店</td>
-          <td>砂漠に不時着した飛行士と星から来た王子の心温まる交流の物語。</td>
-          <td>9784004305373</td>
-          <td><span class="badge bg-success">貸出可</span></td>
-        </tr>
-        <tr>
-          <td>ノルウェイの森</td>
-          <td>文学</td>
-          <td>村上春樹</td>
-          <td>講談社</td>
-          <td>失われた青春と愛を描いた感傷的な長編小説。</td>
-          <td>9784062749120</td>
-          <td><span class="badge bg-danger">貸出不可</span></td>
-        </tr>
+          {% for article in object_list %}
+            <tr>
+            <td><a href="{% url 'library:detail' article.id %}">{{ article.title }}</a></td>
+            <td>{{ article.genre }}</td>
+            <td>{{ article.author }}</td>
+            <td>{{ article.publisher }}</td>
+            <td>{{ article.content }}</td>
+            <td>{{ article.ISBN }}</td>
+            <td>
+              {% if article.lendStatus %}
+                <span class="badge bg-success">貸出可</span>
+              {% else %}
+                <span class="badge bg-danger">貸出不可</span>
+              {% endif %}
+            </td>
+            <td>
+            <a  href="{% url 'library:update' article.id%}" class="btn btn-outline-success btn-sm">Edit</a>
+            </td>
+            <td>
+            <a  href="{% url 'library:delete' article.id%}" class="btn btn-outline-danger btn-sm">Delete</a>
+            </td>
+          {% endfor %}
       </tbody>
     </table>
   </div>
-
-
     <div class="container">
 
-    {% bootstrap_javascript %}  {# bootstrapのJavaScriptの読み込み #}
-</body>
-</html>
+{% endblock %}

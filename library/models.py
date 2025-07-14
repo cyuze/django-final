@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User  # ユーザー管理
+from django.urls import reverse # reverse関数をインポート
 
 class Book(models.Model):
     title = models.CharField(max_length=255)
@@ -11,7 +12,10 @@ class Book(models.Model):
     lendStatus = models.BooleanField(default=True)  # True = 貸出可能
 
     def __str__(self):
-        return self.title, self.genre, self.ISBN, self.content, self.lendStatus    
+        return f"{self.title} | {'貸出可' if self.lendStatus else '貸出不可'}"
+    
+    def get_absolute_url(self):
+        return reverse("library:detail", kwargs={"pk": self.pk})
     
 class LendingHistory(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

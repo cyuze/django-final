@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+<table class="table table-hover table-ditail">
+    <tr>
+        <th>書籍名</th>
+        <td>{{ object.title }}</td>
+    </tr>
+    <tr>
+        <th>ジャンル</th>
+        <td>{{ object.genre }}</td>
+    </tr>
+    <tr>
+        <th>著者</th>
+        <td>{{ object.author }}</td>
+    </tr>
+    <tr>
+        <th>出版社</th>
+        <td>{{ object.publisher }}</td>
+    </tr>
+    <tr>
+        <th>あらすじ</th>
+        <td>{{ object.content }}</td>
+    </tr>
+    <tr>
+        <th>ISBN番号</th>
+        <td>{{ object.ISBN }}</td>
+    </tr>
+    <tr>
+        <th>貸出状況</th>
+        <td>
+            {% if object.lendStatus %}
+                <span>貸出可</span>
+            {% else %}
+                <span>貸出不可</span>
+            {% endif %}
+        </td>
+    </tr>
+</table>
+<div class="d-flex justify-content-center">
+    <a href="{% url 'library:index' %}" class="btn btn-light btn-outline-dark btn-primary btn-lg">Back</a>
+    <a  href="#" class="btn btn-light btn-outline-dark btn-primary btn-lg ms-2">Rent</a>
+    {% comment %} <a  href="{% url 'library:delete' object.id%}" class="btn btn-outline-danger btn-lg btn-light ms-2">Delete</a> {% endcomment %}
+</div>
+<div class="container">
+{% endblock %}

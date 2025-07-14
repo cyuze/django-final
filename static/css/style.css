@@ -1,0 +1,39 @@
+@charset "utf-8";
+
+table {
+    border-radius: 10px;
+    overflow: hidden;
+    border-collapse: separate; /* もしくは collapse のままでもOK */
+    margin-top: 20px;
+}
+
+.nav-bg {
+    background-color: rgb(166, 197, 166);
+}
+
+body {
+    background-color: rgb(69, 69, 69) !important;
+}
+
+td {
+  white-space: nowrap;       /* 折り返ししない */
+  overflow: hidden;          /* はみ出した部分を非表示 */
+  text-overflow: ellipsis;   /* 省略記号「…」を表示 */
+  max-width: 150px;          /* 必要なら幅を指定 */
+}
+
+.table-ditail{
+    width: 60% !important;
+    margin: 20px auto;
+}
+
+.table-ditail td {
+  white-space: normal;       /* 折り返しを許可 */
+  overflow: visible;         /* はみ出しても表示する */
+  text-overflow: clip;       /* 省略しないで切る（オプション） */
+}
+
+.table-delete {
+    width: 30% !important;
+    margin: 20px auto;
+}
