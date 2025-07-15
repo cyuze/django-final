@@ -8,11 +8,11 @@ table {
 }
 
 .nav-bg {
-    background-color: rgb(166, 197, 166);
+    background-color: rgb(101, 153, 74);
 }
 
 body {
-    background-color: rgb(69, 69, 69) !important;
+    background-color:  rgb(101, 153, 74) !important;
 }
 
 td {
@@ -36,4 +36,10 @@ td {
 .table-delete {
     width: 30% !important;
     margin: 20px auto;
+}
+
+.text-deepGreen {
+    color: white;
+    margin: 0;
+    padding: 0;
 }

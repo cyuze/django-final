@@ -39,7 +39,7 @@
 </table>
 <div class="d-flex justify-content-center">
     <a href="{% url 'library:index' %}" class="btn btn-light btn-outline-dark btn-primary btn-lg">Back</a>
-    <a  href="#" class="btn btn-light btn-outline-dark btn-primary btn-lg ms-2">Rent</a>
+    <a  href="{% url 'library:rent' object.id %}" class="btn btn-light btn-outline-dark btn-primary btn-lg ms-2">Rent</a>
     {% comment %} <a  href="{% url 'library:delete' object.id%}" class="btn btn-outline-danger btn-lg btn-light ms-2">Delete</a> {% endcomment %}
 </div>
 <div class="container">

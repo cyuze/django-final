@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+<div class="container bg-light text-dark mt-5 p-4 rounded">
+    <h1>ログアウトしました</h1>
+    <p>ご利用ありがとうございました。</p>
+    <a href="{% url 'library:login' %}">
+        <button class="btn btn-outline-dark" type="submit">Logout</button>   
+    </a>
+</div>
+{% endblock %}

@@ -12,7 +12,7 @@ class Book(models.Model):
     lendStatus = models.BooleanField(default=True)  # True = 貸出可能
 
     def __str__(self):
-        return f"{self.title} | {'貸出可' if self.lendStatus else '貸出不可'}"
+        return self.title
     
     def get_absolute_url(self):
         return reverse("library:detail", kwargs={"pk": self.pk})
@@ -24,4 +24,4 @@ class LendingHistory(models.Model):
     returnDate = models.DateField(null=True, blank=True)
     
     def __str__(self):
-        return self.user, self.book, self.rentalDate, self.returnDate
+        return f"{self.user}, {self.book}"
