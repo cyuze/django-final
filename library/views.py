@@ -14,6 +14,17 @@ class IndexView(generic.ListView):
 class DetailView(generic.DetailView):
     model = Book
     template_name = 'library/detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.request.user
+        book = self.object
+        context['can_return'] = LendingHistory.objects.filter(
+            user=user,
+            book=book,
+            returnDate__isnull=True
+        ).exists() if user.is_authenticated else False
+        return context
     
 class CreateView(generic.CreateView):
     model = Book
@@ -60,7 +71,51 @@ from django.shortcuts import redirect, get_object_or_404
 
 @login_required
 def rent_book(request, pk):
+    if request.method == 'POST':
+        book = get_object_or_404(Book, pk=pk)
+        user = request.user
+        if book.lendStatus:
+            LendingHistory.objects.create(user=user, book=book)
+            book.lendStatus = False
+            book.save()
+        return redirect('library:detail', pk=pk)
+    else:
+        return redirect('library:rentPage', pk=pk)
+
+def rent(request, pk):
     book = get_object_or_404(Book, pk=pk)
-    user = request.user
-    LendingHistory.objects.create(user=user, book=book)
-    return redirect('library:detail', pk=pk)
+    mode = request.GET.get('mode', 'rent')
+    return render(request, 'library/rent.html', {'object': book, 'mode': mode})
+
+def can_return_book(user, pk):
+    return LendingHistory.objects.filter(
+        user=user,
+        book=pk,
+        returnDate__isnull=True
+    ).exists()
+    
+from django.utils import timezone
+
+@login_required
+def return_book(request, pk):
+    if request.method == 'POST':
+        book = get_object_or_404(Book, pk=pk)
+        user = request.user
+        # 該当履歴を取得
+        history = LendingHistory.objects.filter(user=user, book=book, returnDate__isnull=True).first()
+        if history:
+            history.returnDate = timezone.now().date()
+            history.save()
+            book.lendStatus = True
+            book.save()
+        return redirect('library:detail', pk=pk)
+    else:
+        return redirect('library:rentPage', pk=pk)
+    
+class RentalHistoryView(generic.ListView):
+    model = LendingHistory
+    template_name = 'library/rental_history.html'
+    context_object_name = 'histories'
+
+    def get_queryset(self):
+        return LendingHistory.objects.filter(user=self.request.user)

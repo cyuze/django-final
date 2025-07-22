@@ -20,15 +20,15 @@
         </tr>
       </thead>
       <tbody>
-          {% for article in object_list %}
+          {% for article in histories %}
             <tr>
-            <td><a href="{% url 'library:detail' article.id %}?next=index" class="text-success">{{ article.title }}</a></td>
-            {% comment %} <td><a href="{% url 'library:detail' article.id %}" class="text-success">{{ article.title }}</a></td> {% endcomment %}
-            <td>{{ article.genre }}</td>
-            <td>{{ article.author }}</td>
-            <td>{{ article.publisher }}</td>
-            <td>{{ article.content }}</td>
-            <td>{{ article.ISBN }}</td>
+            <td><a href="{% url 'library:detail' article.book.id %}?next=rental" class="text-success">{{ article.book.title }}</a></td>
+            {% comment %} <td><a href="{% url 'library:detail' article.book.id %}" class="text-success">{{ article.book.title }}</a></td> {% endcomment %}
+            <td>{{ article.book.genre }}</td>
+            <td>{{ article.book.author }}</td>
+            <td>{{ article.book.publisher }}</td>
+            <td>{{ article.book.content }}</td>
+            <td>{{ article.book.ISBN }}</td>
             <td>
               {% if article.lendStatus %}
                 <span class="badge bg-success">貸出可</span>
@@ -38,12 +38,12 @@
             </td>
             <td>
               {% if user.is_staff %}
-                <a href="{% url 'library:update' article.id %}" class="btn btn-outline-success btn-sm">Edit</a>
+                <a href="{% url 'library:update' article.book.id %}" class="btn btn-outline-success btn-sm">Edit</a>
               {% endif %}
             </td>
             <td>
               {% if user.is_staff %}
-                <a href="{% url 'library:delete' article.id %}" class="btn btn-outline-danger btn-sm">Delete</a>
+                <a href="{% url 'library:delete' article.book.id %}" class="btn btn-outline-danger btn-sm">Delete</a>
               {% endif %}
             </td>
           {% endfor %}

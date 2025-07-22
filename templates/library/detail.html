@@ -38,9 +38,16 @@
     </tr>
 </table>
 <div class="d-flex justify-content-center">
+    {% if request.GET.next == 'rental' %}
+    <a href="{% url 'library:rental_history' %}" class="btn btn-light btn-outline-dark btn-primary btn-lg">Back</a>
+    {% else %}
     <a href="{% url 'library:index' %}" class="btn btn-light btn-outline-dark btn-primary btn-lg">Back</a>
-    <a  href="{% url 'library:rent' object.id %}" class="btn btn-light btn-outline-dark btn-primary btn-lg ms-2">Rent</a>
-    {% comment %} <a  href="{% url 'library:delete' object.id%}" class="btn btn-outline-danger btn-lg btn-light ms-2">Delete</a> {% endcomment %}
+    {% endif %}
+    {% comment %} <a href="{% url 'library:index' %}" class="btn btn-light btn-outline-dark btn-primary btn-lg">Back</a> {% endcomment %}
+    <a  href="{% url 'library:rentPage' object.id %}" class="btn btn-light btn-outline-primary btn-primary btn-lg ms-2">Rent</a>
+    {% if can_return %}
+        <a href="{% url 'library:rentPage' object.id %}?mode=return" class="btn btn-light btn-outline-success btn-primary btn-lg ms-2">Return</a>
+    {% endif %}
 </div>
 <div class="container">
 {% endblock %}

@@ -43,15 +43,15 @@
                     <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">History</a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Rental</a></li>
+                        <li><a class="dropdown-item" href="{% url 'library:rental_history' %}">Rental</a></li>
                         <li><a class="dropdown-item" href="#">Return</a></li>
                     </ul>
                     </li>
                 </ul>
-                <form class="d-flex" method="get" action="{% url 'library:search' %}">
+                {% comment %} <form class="d-flex" method="get" action="{% url 'library:search' %}">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="words">
                     <button class="btn btn-outline-dark" type="submit">Search</button>
-                </form>
+                </form> {% endcomment %}
                 {% if user.is_staff %}
                 <a  href="{% url 'library:create' %}" class="btn btn-outline-dark ms-2">Add Book</a>
                 {% endif %}

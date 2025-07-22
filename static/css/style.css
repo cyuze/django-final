@@ -3,7 +3,7 @@
 table {
     border-radius: 10px;
     overflow: hidden;
-    border-collapse: separate; /* もしくは collapse のままでもOK */
+    border-collapse: collapse; /* もしくは collapse のままでもOK */
     margin-top: 20px;
 }
 
@@ -42,4 +42,4 @@ td {
     color: white;
     margin: 0;
     padding: 0;
-}
+}   

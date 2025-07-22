@@ -11,5 +11,10 @@ urlpatterns = [
     path('<int:pk>/delete/', views.DeleteView.as_view(), name="delete"),  # 投稿削除ページ
     path('search/', views.search, name='search'),    # 検索
     path('accounts/', include('django.contrib.auth.urls')),     # ユーザー認証用のビューを呼び出す
-    path('<int:pk>/rent', views.rent_book, name="rent"),     # 本を借りる
+    path('<int:pk>/rent', views.rent_book, name="rentMethod"),     # 本を借りるメソッド
+    path('<int:pk>/return', views.return_book, name="returnMethod"),     # 本を返すメソッド
+    path('<int:pk>/rented', views.rent, name="rentPage"),     # 本を借りた後のリダイレクトページ
+    path('<int:pk>/can_return_book', views.can_return_book, name="can_return_book"),     # 返すべき本かどうかの判定関数
+    path('rental_history/', views.RentalHistoryView.as_view(), name='rental_history'),      # ログインユーザーが借りている本の一覧表示
+    # ログインユーザーが返した本の一覧表示
 ]
