@@ -14,7 +14,8 @@
           <th>出版社</th>
           <th>あらすじ</th>
           <th>ISBN番号</th>
-          <th>貸出状況</th>
+          <th>ユーザー</th>
+          <th>レンタル日</th>
           <th></th>
           <th></th>
         </tr>
@@ -29,15 +30,8 @@
             <td>{{ article.book.publisher }}</td>
             <td>{{ article.book.content }}</td>
             <td>{{ article.book.ISBN }}</td>
-            <td>
-              {% if article.book.lendStatus %}
-                <span class="badge bg-success">貸出可</span>
-              {% elif article.book.id in user_lending_ids %}
-                <span class="badge bg-primary">あなたが借りています</span>
-              {% else %}
-                <span class="badge bg-danger">貸出不可</span>
-              {% endif %}
-            </td>
+            <td>{{ article.user }}</td>
+            <td>{{ article.rentalDate.year }}/{{ article.rentalDate.month }}/{{ article.rentalDate.day }}</td>
             <td>
               {% if user.is_staff %}
                 <a href="{% url 'library:update' article.book.id %}" class="btn btn-outline-success btn-sm">Edit</a>
