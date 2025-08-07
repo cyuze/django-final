@@ -30,7 +30,7 @@
             <td>{{ article.book.content }}</td>
             <td>{{ article.book.ISBN }}</td>
             <td>
-              {% if article.lendStatus %}
+              {% if article.book.lendStatus %}
                 <span class="badge bg-success">貸出可</span>
               {% elif article.book.id in user_lending_ids %}
                 <span class="badge bg-primary">あなたが借りています</span>

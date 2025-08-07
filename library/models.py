@@ -25,3 +25,13 @@ class LendingHistory(models.Model):
     
     def __str__(self):
         return f"{self.user}, {self.book}"
+
+class Review(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    postDate = models.DateField(auto_now_add=True)
+    star = models.CharField(max_length=20, blank=True, null=True)
+    content = models.TextField()
+
+    def __str__(self):
+        return f"{self.user}, {self.book}"

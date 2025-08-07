@@ -3,7 +3,8 @@
 table {
     border-radius: 10px;
     overflow: hidden;
-    border-collapse: collapse; /* もしくは collapse のままでもOK */
+    border-collapse: collapse;
+    /* もしくは collapse のままでもOK */
     margin-top: 20px;
 }
 
@@ -12,25 +13,32 @@ table {
 }
 
 body {
-    background-color:  rgb(101, 153, 74) !important;
+    background-color: rgb(101, 153, 74) !important;
 }
 
 td {
-  white-space: nowrap;       /* 折り返ししない */
-  overflow: hidden;          /* はみ出した部分を非表示 */
-  text-overflow: ellipsis;   /* 省略記号「…」を表示 */
-  max-width: 150px;          /* 必要なら幅を指定 */
+    white-space: nowrap;
+    /* 折り返ししない */
+    overflow: hidden;
+    /* はみ出した部分を非表示 */
+    text-overflow: ellipsis;
+    /* 省略記号「…」を表示 */
+    max-width: 150px;
+    /* 必要なら幅を指定 */
 }
 
-.table-ditail{
+.table-ditail {
     width: 60% !important;
     margin: 20px auto;
 }
 
 .table-ditail td {
-  white-space: normal;       /* 折り返しを許可 */
-  overflow: visible;         /* はみ出しても表示する */
-  text-overflow: clip;       /* 省略しないで切る（オプション） */
+    white-space: normal;
+    /* 折り返しを許可 */
+    overflow: visible;
+    /* はみ出しても表示する */
+    text-overflow: clip;
+    /* 省略しないで切る（オプション） */
 }
 
 .table-delete {
@@ -42,4 +50,14 @@ td {
     color: white;
     margin: 0;
     padding: 0;
-}   
+}
+
+.reviewDiv {
+    width: 60%;
+    border-radius: 10px;
+}
+
+.reviewDiv div {
+    background-color: rgb(235, 255, 206);
+    border-radius: 10px;
+}

@@ -16,5 +16,8 @@ urlpatterns = [
     path('<int:pk>/rented', views.rent, name="rentPage"),     # 本を借りた後のリダイレクトページ
     path('<int:pk>/can_return_book', views.can_return_book, name="can_return_book"),     # 返すべき本かどうかの判定関数
     path('rental_history/', views.RentalHistoryView.as_view(), name='rental_history'),      # ログインユーザーが借りている本の一覧表示
-    # ログインユーザーが返した本の一覧表示
+    path('return_history/', views.ReturnHistoryView.as_view(), name='return_history'),      # ログインユーザーが返した本の一覧表示
+    path('auth_rental_history/', views.AuthRentalHistoryView.as_view(), name='auth_rental_history'),      # 管理者権限ログインユーザーが借りている本の一覧表示
+    path('auth_return_history/', views.AuthReturnHistoryView.as_view(), name='auth_return_history'),      # 管理者権限ログインユーザーが返した本の一覧表示
+    path('<int:pk>/post_review', views.post_review, name="post_review"),     # レビューをポストするメソッド
 ]

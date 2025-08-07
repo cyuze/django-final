@@ -17,9 +17,15 @@
 <form action="{% if mode == 'return' %}{% url 'library:returnMethod' object.id %}{% else %}{% url 'library:rentMethod' object.id %}{% endif %}" method="post">
     {% csrf_token %}
     <div class="d-flex justify-content-center">
+
+        {% if request.GET.next == 'rental' %}
+        <a href="{% url 'library:detail' object.id %}?next=rental" class="btn btn-light btn-outline-dark btn-primary btn-lg">Back</a>
+        {% else %}
         <a href="{% url 'library:detail' object.id %}" class="btn btn-light btn-outline-dark btn-primary btn-lg">Back</a>
+        {% endif %}
+
         {% if mode == 'return' %}
-            <button type="submit" class="btn btn-outline-success btn-lg btn-light ms-2">Return</button>
+            <button type="submit" class="btn btn-outline-primary btn-lg btn-light ms-2">Return</button>
         {% elif object.lendStatus %}
             <button type="submit" class="btn btn-outline-primary btn-lg btn-light ms-2">Rent</button>
         {% endif %}

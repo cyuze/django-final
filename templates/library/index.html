@@ -30,7 +30,9 @@
             <td>{{ article.content }}</td>
             <td>{{ article.ISBN }}</td>
             <td>
-              {% if article.lendStatus %}
+              {% if article.is_borrowed_by_user %}
+                <span class="badge bg-primary">あなたが借りています</span>
+              {% elif article.lendStatus %}
                 <span class="badge bg-success">貸出可</span>
               {% else %}
                 <span class="badge bg-danger">貸出不可</span>

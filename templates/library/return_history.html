@@ -14,40 +14,22 @@
           <th>出版社</th>
           <th>あらすじ</th>
           <th>ISBN番号</th>
-          <th>貸出状況</th>
-          <th></th>
-          <th></th>
+          <th>レンタル日</th>
+          <th>リターン日</th>
         </tr>
       </thead>
       <tbody>
           {% for article in histories %}
             <tr>
-            <td><a href="{% url 'library:detail' article.book.id %}?next=rental" class="text-success">{{ article.book.title }}</a></td>
+            <td>{{ article.book.title }}</td>
             {% comment %} <td><a href="{% url 'library:detail' article.book.id %}" class="text-success">{{ article.book.title }}</a></td> {% endcomment %}
             <td>{{ article.book.genre }}</td>
             <td>{{ article.book.author }}</td>
             <td>{{ article.book.publisher }}</td>
             <td>{{ article.book.content }}</td>
             <td>{{ article.book.ISBN }}</td>
-            <td>
-              {% if article.lendStatus %}
-                <span class="badge bg-success">貸出可</span>
-              {% elif article.book.id in user_lending_ids %}
-                <span class="badge bg-primary">あなたが借りています</span>
-              {% else %}
-                <span class="badge bg-danger">貸出不可</span>
-              {% endif %}
-            </td>
-            <td>
-              {% if user.is_staff %}
-                <a href="{% url 'library:update' article.book.id %}" class="btn btn-outline-success btn-sm">Edit</a>
-              {% endif %}
-            </td>
-            <td>
-              {% if user.is_staff %}
-                <a href="{% url 'library:delete' article.book.id %}" class="btn btn-outline-danger btn-sm">Delete</a>
-              {% endif %}
-            </td>
+            <td>{{ article.rentalDate.year }}/{{ article.rentalDate.month }}/{{ article.rentalDate.day }}</td>
+            <td>{{ article.returnDate.year }}/{{ article.returnDate.month }}/{{ article.returnDate.day }}</td>
           {% endfor %}
       </tbody>
     </table>

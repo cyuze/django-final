@@ -18,18 +18,40 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{% url 'library:index' %}">Home</a>
-                    </li> 
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"></a>
-                    </li>
-
+                    
                     <li class="nav-item">
                     {% if user.is_authenticated %}
                         <span class="nav-link active"><p class="text-deepGreen">{{ user }}</p></span>
                     {% endif %}
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'library:index' %}">Home</a>
+                    </li> 
+
+                    <!-- 💡 プルダウンメニュー -->
+                    {% if user.is_authenticated %}
+                    <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">History</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'library:rental_history' %}">Rental</a></li>
+                        <li><a class="dropdown-item" href="{% url 'library:return_history' %}">Return</a></li>
+                    </ul>
+                    </li>
+                    {% endif %}
+                    {% if user.is_authenticated %}
+                    <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Auth-History</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'library:auth_rental_history' %}">Rental</a></li>
+                        <li><a class="dropdown-item" href="{% url 'library:auth_return_history' %}">Return</a></li>
+                    </ul>
+                    </li>
+                    {% endif %}
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"></a>
+                    </li>
+
                     <li class="nav-item">
                     {% if user.is_authenticated %}
                         <a href="{% url 'library:logout' %}" class="nav-link active">Logout</a>
@@ -38,15 +60,6 @@
                     {% endif %}
                     </li>
 
-
-                    <!-- 💡 プルダウンメニュー -->
-                    <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">History</a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{% url 'library:rental_history' %}">Rental</a></li>
-                        <li><a class="dropdown-item" href="#">Return</a></li>
-                    </ul>
-                    </li>
                 </ul>
                 {% comment %} <form class="d-flex" method="get" action="{% url 'library:search' %}">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="words">

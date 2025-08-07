@@ -26,28 +26,120 @@
         <th>ISBN番号</th>
         <td>{{ object.ISBN }}</td>
     </tr>
+<tr>
+    <th>貸出状況</th>
+    <td>
+        {% if object.lendStatus %}
+            <span>貸出可</span>
+        {% elif user.username in lending_users %}
+            <span>あなたが貸借中です</span>
+        {% else %}
+            <span>貸出不可</span>
+        {% endif %}
+    </td>
+</tr>
+
+
+{% if user.is_staff %}
     <tr>
-        <th>貸出状況</th>
+        <th>貸出中のユーザー</th>
         <td>
-            {% if object.lendStatus %}
-                <span>貸出可</span>
+            {% if lending_users %}
+                {% for username in lending_users %}
+                    {{ username }}{% if not forloop.last %}, {% endif %}
+                {% endfor %}
             {% else %}
-                <span>貸出不可</span>
+                なし
             {% endif %}
         </td>
     </tr>
+{% endif %}
+
 </table>
-<div class="d-flex justify-content-center">
+<div class="d-flex justify-content-center mb-2">
     {% if request.GET.next == 'rental' %}
-    <a href="{% url 'library:rental_history' %}" class="btn btn-light btn-outline-dark btn-primary btn-lg">Back</a>
+    <a href="{% url 'library:rental_history' %}" class="btn btn-light btn-outline-dark btn-primary btn-lg ">Back</a>
     {% else %}
-    <a href="{% url 'library:index' %}" class="btn btn-light btn-outline-dark btn-primary btn-lg">Back</a>
+    <a href="{% url 'library:index' %}" class="btn btn-light btn-outline-dark btn-primary btn-lg ">Back</a>
     {% endif %}
-    {% comment %} <a href="{% url 'library:index' %}" class="btn btn-light btn-outline-dark btn-primary btn-lg">Back</a> {% endcomment %}
-    <a  href="{% url 'library:rentPage' object.id %}" class="btn btn-light btn-outline-primary btn-primary btn-lg ms-2">Rent</a>
-    {% if can_return %}
-        <a href="{% url 'library:rentPage' object.id %}?mode=return" class="btn btn-light btn-outline-success btn-primary btn-lg ms-2">Return</a>
+
+    {% if user.is_authenticated %}
+        {% if request.GET.next == 'rental' %}
+        <a  href="{% url 'library:rentPage' object.id %}?next=rental" class="btn btn-light btn-outline-primary btn-primary btn-lg ms-2 ">Rent</a>
+        {% else %}
+        <a  href="{% url 'library:rentPage' object.id %}" class="btn btn-light btn-outline-primary btn-primary btn-lg ms-2 ">Rent</a>
+        {% endif %}
+
+        {% if request.GET.next == 'rental' %}
+            {% if can_return %}
+                <a href="{% url 'library:rentPage' object.id %}?mode=return&next=rental" class="btn btn-light btn-outline-primary btn-primary btn-lg ms-2 ">Return</a>
+            {% endif %}
+        {% else %}
+            {% if can_return %}
+                <a href="{% url 'library:rentPage' object.id %}?mode=return" class="btn btn-light btn-outline-primary btn-primary btn-lg ms-2 ">Return</a>
+            {% endif %}
+        {% endif %}
     {% endif %}
 </div>
+{% comment %} <div class="bg-white ms-auto me-auto mb-3 reviewDiv pb-2">
+    <h1 class="pt-3 ps-2">レビュー</h1>
+    <form method="POST" action="{% url 'library:post_review' book.pk %}">
+        {% csrf_token %}
+        <div>
+            <select name="star" class="ms-4 mt-3" required>
+                <option></option>
+                <option value="☆☆☆☆☆">☆☆☆☆☆</option>
+                <option value="★☆☆☆☆">★☆☆☆☆</option>
+                <option value="★★☆☆☆">★★☆☆☆</option>
+                <option value="★★★☆☆">★★★☆☆</option>
+                <option value="★★★★☆">★★★★☆</option>
+                <option value="★★★★★">★★★★★</option>
+            </select>
+            <div class="m-2 mt-0 d-flex">
+                <textarea name="review" rows=5 cols=70 class="m-3 mt-1" required></textarea>
+                <input type="submit" class="mb-3 mt-auto btn btn-light btn-outline-dark btn-primary btn-sm" value="Post">
+            </div>
+        </div>
+    </form>
+    <div class="m-2">
+        <h4>admin 2025/5/23 ★★★☆☆</h4>
+        <p>孤独と向き合いながらも、希望を探す主人公の姿が胸を打つ。繊細な描写と静かな余韻が心に残る一冊。読後、世界の色が少しだけ優しく変わる。</p>
+    </div>
+</div> {% endcomment %}
+
+<div class="bg-white ms-auto me-auto mb-3 reviewDiv pb-2">
+  <h1 class="pt-3 ps-2">レビュー</h1>
+
+  <!-- 投稿フォーム（すでに実装済み） -->
+    <form method="POST" action="{% url 'library:post_review' book.pk %}">
+        {% csrf_token %}
+        <div>
+            <select name="star" class="ms-4 mt-3" required>
+                <option></option>
+                <option value="☆☆☆☆☆">☆☆☆☆☆</option>
+                <option value="★☆☆☆☆">★☆☆☆☆</option>
+                <option value="★★☆☆☆">★★☆☆☆</option>
+                <option value="★★★☆☆">★★★☆☆</option>
+                <option value="★★★★☆">★★★★☆</option>
+                <option value="★★★★★">★★★★★</option>
+            </select>
+            <div class="m-2 mt-0 d-flex">
+                <textarea name="review" rows=5 cols=70 class="m-3 mt-1" required></textarea>
+                <input type="submit" class="mb-3 mt-auto btn btn-light btn-outline-dark btn-primary btn-sm" value="Post">
+            </div>
+        </div>
+    </form>
+  <!-- レビュー一覧の表示 -->
+  {% for review in reviews %}
+    <div class="m-2 border-bottom">
+      <h4>{{ review.user.username }} {{ review.postDate }} {{ review.star }}</h4>
+      <p>{{ review.content }}</p>
+    </div>
+  {% empty %}
+    <p class="ms-3">まだレビューはありません。</p>
+  {% endfor %}
+</div>
+
+<span style="display:block; height:1px;"></span>
 <div class="container">
 {% endblock %}
