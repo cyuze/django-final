@@ -30,16 +30,11 @@
         <th>ISBN番号</th>
         <td>{{ form.ISBN }}</td>
     </tr>
-    <tr>
-        <th>貸出状況</th>
-        <td>
-            {% if object.lendStatus %}
-                <span>貸出可</span>
-            {% else %}
-                <span>貸出不可</span>
-            {% endif %}
-        </td>
+        <tr style="display:none;">
+        <th>貸出状態</th>
+        <td>{{ form.lendStatus }}</td>
     </tr>
+
 </table>
 <div class="d-flex justify-content-center mb-3">
     <a href="{% url 'library:index' %}" class="btn btn-light btn-outline-dark btn-primary btn-lg">Back</a>

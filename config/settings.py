@@ -125,12 +125,10 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static')
-    ]    # 静的ファイルのディレクトリの場所
+    os.path.join(BASE_DIR, 'static')  # ← 開発用の静的ファイル
+]
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
-STATIC_ROOT = str(BASE_DIR / "static")
+STATIC_ROOT = str(BASE_DIR / "staticfiles")  # ← 本番用に collectstatic で集める場所
  # whitenoiseを使用する為、追加
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
